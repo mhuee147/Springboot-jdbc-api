@@ -1,5 +1,8 @@
-package com.nbstech.spring.basic.springbootjdbcapi;
+package com.nbstech.spring.basic.dataaccess;
 
+import com.nbstech.spring.basic.dataaccess.SpringJdbcApi.Player;
+import com.nbstech.spring.basic.dataaccess.SpringJdbcApi.PlayerDAO;
+import com.nbstech.spring.basic.dataaccess.SpringJdbcApi.TournamentDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,7 @@ import java.sql.Date;
 
 
 @SpringBootApplication
-public class SpringbootJdbcApiApplication implements CommandLineRunner {
+public class SpringbootDataAccessApplication implements CommandLineRunner {
 	private org.slf4j.Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	TournamentDAO tournamentDAO;
@@ -19,7 +22,7 @@ public class SpringbootJdbcApiApplication implements CommandLineRunner {
 	@Autowired
 	PlayerDAO playerDao;
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootJdbcApiApplication.class, args);
+		SpringApplication.run(SpringbootDataAccessApplication.class, args);
 
 	}
 
@@ -31,7 +34,7 @@ public class SpringbootJdbcApiApplication implements CommandLineRunner {
 		logger.info("Player with Id 3: {}", playerDao.getPlayerById(3));
 		logger.info("French Players: {}", playerDao.getPlayerByNationality("France"));
 		logger.info("Inserting Player 4: {}", playerDao.insertPlayer(
-				new Player (4, "Thiem", "Austria", new Date(System.currentTimeMillis()), 17 ))
+				new Player(4, "Thiem", "Austria", new Date(System.currentTimeMillis()), 17 ))
 		);
 
 		logger.info("Updating Player with Id 4: {}", playerDao.updatePlayer(
