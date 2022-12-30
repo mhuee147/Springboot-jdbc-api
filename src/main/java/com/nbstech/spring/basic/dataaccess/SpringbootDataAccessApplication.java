@@ -1,5 +1,7 @@
 package com.nbstech.spring.basic.dataaccess;
 
+import com.nbstech.spring.basic.dataaccess.SpringDataJPA.PlayerEntity;
+import com.nbstech.spring.basic.dataaccess.SpringDataJPA.PlayerRepository;
 import com.nbstech.spring.basic.dataaccess.SpringJdbcApi.Player;
 import com.nbstech.spring.basic.dataaccess.SpringJdbcApi.PlayerDAO;
 import com.nbstech.spring.basic.dataaccess.SpringJdbcApi.TournamentDAO;
@@ -21,6 +23,8 @@ public class SpringbootDataAccessApplication implements CommandLineRunner {
 
 	@Autowired
 	PlayerDAO playerDao;
+	@Autowired
+	PlayerRepository playerRepository;
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootDataAccessApplication.class, args);
 
@@ -28,13 +32,39 @@ public class SpringbootDataAccessApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		SpringDataJPA();
+	}
+	private void SpringDataJPA() {
+		// ex1
+		logger.info("\n\n>> Inserting Player: {}\n", playerRepository.insertPlayer(
+				new PlayerEntity("Djokovic", "Serbia", Date.valueOf("1987-05-22"), 81)));
 
-		logger.info("All Players Data: {}", playerDao.getAllPlayers());
+		logger.info("\n\n>> Inserting Player: {}\n", playerRepository.insertPlayer(
+				new PlayerEntity("Monfils", "France", Date.valueOf("1986-09-01"), 10)));
 
-		logger.info("Player with Id 3: {}", playerDao.getPlayerById(3));
+		// ex2
+		logger.info("\n\n>> Player with id 2: {}\n", playerRepository.getPlayerById(2));
+
+		// ex3
+		logger.info("\n\n>> Inserting Player: {}\n", playerRepository.insertPlayer(
+				new PlayerEntity("Thiem", "Austria",
+						new Date(System.currentTimeMillis()), 17)));
+		logger.info("\n\n>> Updating Player with Id 3: {}\n", playerRepository.updatePlayer(
+				new PlayerEntity(3, "Thiem", "Austria", Date.valueOf("1993-09-03"), 17)));
+		logger.info("\n\n>> Player with id 3: {}\n", playerRepository.getPlayerById(3));
+
+		//delete player
+		playerRepository.deleteById(2);
+	}
+
+	private void SpringJdbcApi() {
+		tournamentDAO.createTournamentTable();
+
 		logger.info("French Players: {}", playerDao.getPlayerByNationality("France"));
+
+		/*
 		logger.info("Inserting Player 4: {}", playerDao.insertPlayer(
-				new Player(4, "Thiem", "Austria", new Date(System.currentTimeMillis()), 17 ))
+				new Player (4, "Thiem", "Austria", new Date(System.currentTimeMillis()), 17 ))
 		);
 
 		logger.info("Updating Player with Id 4: {}", playerDao.updatePlayer(
@@ -46,7 +76,7 @@ public class SpringbootDataAccessApplication implements CommandLineRunner {
 		logger.info("All Players Data: {}", playerDao.getAllPlayers());
 
 		logger.info("Player with Id 3: {}", playerDao.getPlayerById(3));
-		tournamentDAO.createTournamentTable();
+		 */
 	}
 
 }
