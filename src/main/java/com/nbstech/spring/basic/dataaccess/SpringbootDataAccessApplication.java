@@ -98,6 +98,7 @@ public class SpringbootDataAccessApplication implements CommandLineRunner {
 		logger.info("Player with Id 2: {}", springDataJPAPlayerRepository.findById(2));
 
 		logger.info("All Players Data: {}", springDataJPAPlayerRepository.findAll());
+		logger.info("All Players Data: {}", springDataJPAPlayerRepository.findByNationality("France"));
 
 		springDataJPAPlayerRepository.deleteById(2);
 	}
